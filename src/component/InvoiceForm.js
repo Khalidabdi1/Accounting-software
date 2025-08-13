@@ -9,6 +9,8 @@ import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import FolderIcon from '@mui/icons-material/Folder';
+
 
 
 import { useState } from 'react';
@@ -64,12 +66,24 @@ export default function InvoiceForm({Data}){
             </CardContent>
 
 {/* card action  */}
-            <CardActions onClick={(()=>{handleClick()})}>
-              <Fab color='primary' variant="extended">
-                <AddIcon  sx={{ mr: 1 }} />
-                ADD
-              </Fab>
-            </CardActions>
+               <div style={{display:"flex"}}>
+                    <CardActions onClick={(()=>{handleClick()})}>
+
+                    <Fab color='secondary' variant="extended">
+                        <AddIcon  sx={{ mr: 1 }} />
+                        ADD
+                    </Fab>
+
+                    
+                    </CardActions>
+
+                        <CardActions>
+                            <Fab color='primary' variant="extended">
+                                <FolderIcon  sx={{ mr: 1 }} />
+                                downloadPDF
+                            </Fab>
+                    </CardActions>
+              </div>
 {/* ===card action===  */}
 
 

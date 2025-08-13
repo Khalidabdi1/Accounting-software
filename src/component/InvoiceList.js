@@ -8,9 +8,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
+import html2pdf from "html2pdf.js";
+import { useRef } from 'react';
+
 
 
 export default function InvoiceList({check,Formdata}){
+let current=useRef(null)
+
+
 console.log(check)
 console.log(Formdata)
 
@@ -19,10 +25,12 @@ function createData(Invoice, Name, Amount, Type,) {
 }
 
 let [rows,setRow]=useState([]) 
+let [Total,setTotal]=useState(0)
 
 useEffect(()=>{
 if(check===true){
 setRow((old=>[...old,createData(Formdata.Invoice,Formdata.name,Formdata.Amount,Formdata.Type)]))
+setTotal(parseInt(Total)+parseInt(Formdata.Amount))
 }
 },[check,Formdata])
 
@@ -36,7 +44,7 @@ setRow((old=>[...old,createData(Formdata.Invoice,Formdata.name,Formdata.Amount,F
 
     return (
       <div style={{width:"70%"}} sx={{ color: 'text.secondary', fontSize: 14 }}>
-        <Card variant='outlined' style={{width:"100%",height:"100%"}}>
+        <Card variant='outlined' style={{width:"100%",height:"100%"}} ref={current}>
        
                 <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -73,9 +81,12 @@ setRow((old=>[...old,createData(Formdata.Invoice,Formdata.name,Formdata.Amount,F
                                         
                                         
                                             <TableRow>
-                                                <TableCell colSpan={2}>Total</TableCell>
+                                                <TableCell colSpan={3}>Total</TableCell>
                                                 {/** todo:change the number to be static */}
-                                                <TableCell align="right">900</TableCell>
+                                                <TableCell align="right">
+                                                    {Total}
+
+                                                </TableCell>
                                             </TableRow>
                                     </TableBody>
 
