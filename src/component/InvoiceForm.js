@@ -15,8 +15,19 @@ import { useState } from 'react';
 
 
 
-export default function InvoiceForm(){
-    let [selectValue,setSelectValue]=useState("wwdd")
+export default function InvoiceForm({Data}){
+    // let [selectValue,setSelectValue]=useState("")
+    let [value,setValue]=useState({
+      Invoice:"",
+      name:"",
+      Amount:0,
+      Type:""
+
+    })
+
+    function handleClick(){
+     Data(value)
+    }
     
     return(
        <div style={{width:"30%",height:"100vh"}}>
@@ -29,18 +40,18 @@ export default function InvoiceForm(){
                 </Typography>
 {/** start of input  */}
                 <div style={{display:"flex",flexDirection:"column"}}>
-                    <TextField  id="outlined-basic" label="Invoice number" variant="outlined" type='number' style={{marginBottom:"10px",marginTop:"10px"}}/>
-                    <TextField id="outlined-basic" label="Name of customer/supplier" variant="outlined" style={{marginBottom:"10px",marginTop:"10px"}} />
-                    <TextField id="outlined-basic" label="Amount" variant="outlined" type='number' style={{marginBottom:"10px",marginTop:"10px"}}/>
+                    <TextField  id="outlined-basic" label="Invoice number" variant="outlined" type='number' style={{marginBottom:"10px",marginTop:"10px"}} onChange={((e)=>{setValue({...value,Invoice:e.target.value})})}/>
+                    <TextField id="outlined-basic" label="Name of customer/supplier" variant="outlined" style={{marginBottom:"10px",marginTop:"10px"}}onChange={((e)=>{setValue({...value,name:e.target.value})})} />
+                    <TextField id="outlined-basic" label="Amount" variant="outlined" type='number' style={{marginBottom:"10px",marginTop:"10px"}} onChange={((e)=>{setValue({...value,Amount:e.target.value})})}/>
 
                         <InputLabel id="demo-simple-select-label" sx={{ color: 'text.secondary', fontSize: 14 }}>Type</InputLabel>
 
                          <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={selectValue}
+                            value={value.Type}
                           
-                            onChange={((e)=>{setSelectValue(e.target.value)})}
+                            onChange={((e)=>{setValue({...value,Type:e.target.value})})}
                             style={{marginBottom:"10px",marginTop:"10px"}}
                             >
                             <MenuItem value={"income"}>income</MenuItem>
@@ -53,7 +64,7 @@ export default function InvoiceForm(){
             </CardContent>
 
 {/* card action  */}
-            <CardActions>
+            <CardActions onClick={(()=>{handleClick()})}>
               <Fab color='primary' variant="extended">
                 <AddIcon  sx={{ mr: 1 }} />
                 ADD

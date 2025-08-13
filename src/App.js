@@ -4,6 +4,7 @@ import InvoiceList from './component/InvoiceList';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { purple ,red} from '@mui/material/colors';
+import { useEffect, useState } from 'react';
 
 
 const darkTheme = createTheme({
@@ -21,15 +22,29 @@ const darkTheme = createTheme({
     }
   },
 });
-
 function App() {
+  let Formdata;
+let [check,setCheck]=useState(false)
+let [dataTable,setDataTable]=useState({})
+
+  function resiveData(data){
+  console.log(data)
+  Formdata=data
+  
+    console.log(Formdata)
+    setCheck(true)
+    setDataTable(data)
+    
+  }
+
+
   return (
      <ThemeProvider theme={darkTheme}>
             <CssBaseline />
 
     <div className="App" style={{height:"100vh",width:"100vw",display:"flex"}}>
-      <InvoiceForm/>
-      <InvoiceList/>
+      <InvoiceForm Data={resiveData}/>
+      <InvoiceList check={check} Formdata={dataTable}/>
 
     </div>
     </ThemeProvider>
