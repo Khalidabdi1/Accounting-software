@@ -23,12 +23,25 @@ export default function InvoiceForm({Data}){
       Invoice:"",
       name:"",
       Amount:0,
-      Type:""
+      Type:"",
+      pdf:false
 
     })
 
+let dis=value.Invoice !=="" && value.Amount !==0 &&value.name !=="" &&value.Type !=="" && value.pdf === false
+let disabled=!dis
+
     function handleClick(){
      Data(value)
+
+     setValue({
+            Invoice:"",
+      name:"",
+      Amount:0,
+      Type:"",
+      pdf:false
+     })
+    
     }
     
     return(
@@ -42,9 +55,9 @@ export default function InvoiceForm({Data}){
                 </Typography>
 {/** start of input  */}
                 <div style={{display:"flex",flexDirection:"column"}}>
-                    <TextField  id="outlined-basic" label="Invoice number" variant="outlined" type='number' style={{marginBottom:"10px",marginTop:"10px"}} onChange={((e)=>{setValue({...value,Invoice:e.target.value})})}/>
-                    <TextField id="outlined-basic" label="Name of customer/supplier" variant="outlined" style={{marginBottom:"10px",marginTop:"10px"}}onChange={((e)=>{setValue({...value,name:e.target.value})})} />
-                    <TextField id="outlined-basic" label="Amount" variant="outlined" type='number' style={{marginBottom:"10px",marginTop:"10px"}} onChange={((e)=>{setValue({...value,Amount:e.target.value})})}/>
+                    <TextField  id="outlined-basic" value={value.Invoice} label="Invoice number" variant="outlined" type='number' style={{marginBottom:"10px",marginTop:"10px"}} onChange={((e)=>{setValue({...value,Invoice:e.target.value})})}/>
+                    <TextField id="outlined-basic" value={value.name} label="Name of customer/supplier" variant="outlined" style={{marginBottom:"10px",marginTop:"10px"}}onChange={((e)=>{setValue({...value,name:e.target.value})})} />
+                    <TextField id="outlined-basic" value={value.Amount} label="Amount" variant="outlined" type='number' style={{marginBottom:"10px",marginTop:"10px"}} onChange={((e)=>{setValue({...value,Amount:e.target.value})})}/>
 
                         <InputLabel id="demo-simple-select-label" sx={{ color: 'text.secondary', fontSize: 14 }}>Type</InputLabel>
 
@@ -67,9 +80,14 @@ export default function InvoiceForm({Data}){
 
 {/* card action  */}
                <div style={{display:"flex"}}>
-                    <CardActions onClick={(()=>{handleClick()})}>
+                    <CardActions >
 
-                    <Fab color='secondary' variant="extended">
+                    <Fab color='secondary' variant="extended"   
+                    disabled={disabled}
+                    onClick={(()=>{
+                        handleClick()
+                        
+                        })}>
                         <AddIcon  sx={{ mr: 1 }} />
                         ADD
                     </Fab>
@@ -77,8 +95,14 @@ export default function InvoiceForm({Data}){
                     
                     </CardActions>
 
-                        <CardActions>
-                            <Fab color='primary' variant="extended">
+                        <CardActions >
+                            <Fab color='primary' variant="extended"  
+                            onClick={((e)=>{
+                            let newValue ={...value,pdf:true}
+                            setValue(newValue)
+                            Data(newValue)
+                            
+                            })}>
                                 <FolderIcon  sx={{ mr: 1 }} />
                                 downloadPDF
                             </Fab>

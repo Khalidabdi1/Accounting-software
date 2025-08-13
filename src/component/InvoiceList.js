@@ -13,8 +13,26 @@ import { useRef } from 'react';
 
 
 
+
 export default function InvoiceList({check,Formdata}){
 let current=useRef(null)
+console.log("invoise rerender")
+
+function downloadPDF(){
+    if(Formdata.pdf===true){
+
+        const element =current.current
+        html2pdf().from(element).save("Invoice.pdf")
+
+
+    }
+
+}
+
+useEffect(()=>{
+downloadPDF()
+
+},[check,Formdata.pdf])
 
 
 console.log(check)
@@ -44,10 +62,11 @@ setTotal(parseInt(Total)+parseInt(Formdata.Amount))
 
     return (
       <div style={{width:"70%"}} sx={{ color: 'text.secondary', fontSize: 14 }}>
+        
         <Card variant='outlined' style={{width:"100%",height:"100%"}} ref={current}>
        
-                <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableContainer component={Paper} >
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                             {/** start of the head of table */}
                             <TableHead>
                                     <TableRow>
